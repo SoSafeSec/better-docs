@@ -11,7 +11,7 @@ var template = require('jsdoc/template')
 var util = require('util')
 const { getParser } = require('jsdoc/util/markdown')
 
-var bundler = require('./bundler')
+// var bundler = require('./bundler')
 const markdownParser = getParser()
 
 var htmlsafe = helper.htmlsafe
@@ -325,17 +325,17 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
   }, {})
 
   const subCategoryNames = Object.keys(subCategories)
-    
+
   var nav = ''
 
   subCategoryNames.forEach((subCategoryName) => {
     const subCategoryItems = subCategories[subCategoryName]
     if (subCategoryItems.length) {
       var itemsNav = ''
-    
+
       subCategoryItems.forEach(function(item) {
         var displayName
-    
+
         if ( !hasOwnProp.call(item, 'longname') ) {
           itemsNav += '<li>' + linktoFn('', item.name) + '</li>'
         }
@@ -361,11 +361,11 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
           }
 
           itemsNav += '</li>'
-    
+
           itemsSeen[item.longname] = true
         }
       })
-            
+
       if (itemsNav !== '') {
         var heading = itemHeading
         if (subCategoryName) {
@@ -405,7 +405,7 @@ function buildGroupNav (members, title) {
   nav += buildMemberNav(members.events || [], 'Events', seen, linkto)
   nav += buildMemberNav(members.mixins || [], 'Mixins', seen, linkto)
   nav += buildMemberNav(members.components || [], 'Components', seen, linkto)
-    
+
   if (members.globals && members.globals.length) {
     globalNav = ''
 
@@ -467,7 +467,7 @@ function buildNav(members, navTypes = null, betterDocs) {
       }
     })
   })
-    
+
   nav += buildGroupNav(rootScope)
   Object.keys(categorised).sort().forEach(function (category) {
     nav += buildGroupNav(categorised[category], category)
@@ -688,7 +688,7 @@ exports.publish = function(taffyData, opts, tutorials) {
       }
       members.tutorials = tutorials.children
     }
-        
+
   } else {
     members.tutorials = tutorials.children
   }
@@ -710,7 +710,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
   // once for all
   view.nav = buildNav(members, null, conf.betterDocs)
-  
+
   view.tutorialsNav = buildNav(members, ['tutorials'], conf.betterDocs)
 
   bundler(members.components, outdir, conf)
@@ -813,7 +813,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
   function saveLandingPage() {
     const content = fs.readFileSync(conf.betterDocs.landing, 'utf8')
-        
+
     var landingPageData = {
       title: 'Home',
       content,
@@ -823,7 +823,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     var docsPath = path.join(outdir, 'docs.html')
 
     fs.renameSync(homePath, docsPath)
-        
+
     view.layout = 'landing.tmpl'
     var html = view.render('content.tmpl', landingPageData)
 
